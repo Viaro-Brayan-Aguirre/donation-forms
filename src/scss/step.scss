@@ -1,0 +1,97 @@
+//step one controllers
+$donation-step-default-color: #d3d3d3; 
+$donation-step-icon-color: white; 
+$donation-step-one-selected-background: #ED7D3A;
+$donation-step-two-selected-background: #05F140;
+$donation-step-tree-selected-background: #A1FCDF;
+$donation-step-four-selected-background: #7D82B8;
+
+.step_container {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    margin: auto;
+    height: 60px;
+    display: flex;
+    margin-bottom: 5px;
+  
+    .step_section {
+      display: inline-flex;
+      width: 25%;
+      box-sizing: border-box;
+  
+      .step_icon {
+        width: 40%;
+        position: relative;
+  
+        .step_icon_container {
+          width: 100%;
+          background: $donation-step-default-color;
+          height: 45px;
+          border-radius: 50%;
+          position: absolute;
+          top: 50%;
+          transform: translate(-2px, -50%);
+          border: solid 2px $donation-step-default-color;
+          box-sizing: content-box;
+  
+          i.fa {
+            color: $donation-step-icon-color;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 22px;
+          }
+      }
+  
+      }
+    }
+  
+    .step_bar_container {
+      width: 30%;
+      position: relative;
+  
+      .step_bar {
+        width: 100%;
+        background: $donation-step-default-color;
+        height: 15px;
+        position: absolute;
+        top: 50%;
+        transform: translate(0%,-50%);
+      }
+    }
+  
+    .step_bar_container.transparent {
+      visibility: hidden;
+    }
+  
+    .step_section:first-child.selected {
+      .step_bar, .step_icon_container {
+        background-color: $donation-step-one-selected-background;
+        border-color: $donation-step-one-selected-background;
+      } 
+    }
+  
+    .step_section:nth-child(2).selected {
+      .step_bar, .step_icon_container {
+        background-color: $donation-step-two-selected-background;
+        border-color: $donation-step-two-selected-background;
+      } 
+    }
+  
+    .step_section:nth-child(3).selected {
+      .step_bar, .step_icon_container {
+        background-color: $donation-step-tree-selected-background;
+        border-color: $donation-step-tree-selected-background;
+      } 
+    }
+  
+    .step_section:nth-child(4).selected {
+      .step_bar, .step_icon_container {
+        background-color: $donation-step-four-selected-background;
+        border-color: $donation-step-four-selected-background;
+      } 
+    }
+  
+  }

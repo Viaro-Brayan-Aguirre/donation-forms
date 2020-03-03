@@ -1,0 +1,48 @@
+.login_view {
+  height: calc(100% );
+}
+
+.login_view > .row {
+  height: 100%;
+}
+
+.login_form {
+  width: 100%;
+  border-radius: 5px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  box-shadow: #6e59e5 0px 0px 7px 0px;
+  position: relative;
+  top: 100px;
+}
+.login_form .login_icon_container {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  top: -220px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: #6e59e5 0px 0px 7px 0px;
+}
+.login_form .login_icon {
+  width: 150px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.login_form .inp_control {
+  padding-bottom: 10px;
+}
+.login_form .btn_container {
+  text-align: center;
+}
+
+.login_row_shows label {
+  vertical-align: middle;
+}
+
+/*# sourceMappingURL=login.css.map */

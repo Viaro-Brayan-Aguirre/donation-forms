@@ -1,0 +1,115 @@
+/**
+General Styles
+*/
+html {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font: 100% Helvetica, sans-serif;
+  color: #333;
+  background-color: skyblue !important;
+  min-width: 450px;
+  min-height: 600px;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.root_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.lock_screen {
+  width: 100vw;
+  background: #fff0f09e;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.lock_screen img {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toast.error {
+  background-color: #f82222ad;
+  color: white;
+}
+
+.menu_logo {
+  background: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+.menu_logo img {
+  width: 80%;
+  height: auto;
+  position: relative;
+  top: calc(50% - 5px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.logo_cont {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.logo_cont img {
+  width: 75%;
+  height: auto;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+img.wing_left {
+  position: absolute;
+  width: 200px;
+  left: 62px;
+  top: -110px;
+}
+
+img.wing_right {
+  width: 200px;
+  transform: scaleX(-1);
+  position: absolute;
+  right: 61px;
+  top: -110px;
+}
+
+.back_content_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+}
+
+#root_view {
+  flex: 1;
+  overflow: auto;
+}
+
+/*# sourceMappingURL=general.css.map */
