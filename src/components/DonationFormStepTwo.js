@@ -1,10 +1,10 @@
 import React from 'react';
-import {StepView} from './StepView';
 import '../css/donate_form.css';
 import ReactDOM from 'react-dom';
 import {Toast} from './Toast';
 import {FormSection} from './FormSection';
 import {StepContainer} from './StepContainer';
+import {StepFooterButtons} from './StepFooterButtons';
 
 
 export class DonationFormStepTwo extends React.Component {
@@ -21,38 +21,19 @@ export class DonationFormStepTwo extends React.Component {
     
     render(){
     return(
-        <StepContainer id="form_step_two" setStyle={this.state.style}>
-            <div className="container">
-                <div className="row">
-                    <div className="col-12">
-                        <StepView step={2}></StepView>
-                    </div>
-                    <div className="col-12">
-                        <FormSection title={this.props.panel_data.PanelTitle}>
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-12 form_section_list_container">
-                                        {this.generateItemList()}
-                                    </div>
-                                </div>
-                            </div>
-                        </FormSection>
-                        <div className="container">
-                            <div className="row ">
-                                <div className="col-3 ">
-                                    <button onClick={this.handlePreviousStep} className="btn btn-sm btn-secondary" type="button">Prev Step</button>
-                                </div>
-                                <div className="col-6">
-
-                                </div>
-                                <div className="col-3  ">
-                                    <button onClick={this.handleNextStep} className="btn btn-sm btn-secondary" type="button">Next Step</button>
-                                </div>
-                            </div>
+        <StepContainer id="form_step_two" setStyle={this.state.style} step={2}>
+            <FormSection title={this.props.panel_data.PanelTitle}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 form_section_list_container">
+                            {this.generateItemList()}
                         </div>
                     </div>
                 </div>
-            </div>
+            </FormSection>
+            <StepFooterButtons 
+                left="Prev Step" left_action={this.handlePreviousStep} 
+                right="Next Step" right_action={this.handleNextStep} />
         </StepContainer>
      );
     }

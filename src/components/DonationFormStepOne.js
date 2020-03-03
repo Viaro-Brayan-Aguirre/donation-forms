@@ -1,9 +1,9 @@
-import React from 'react'; 
-import {StepView} from './StepView'; 
+import React from 'react';
 import '../css/donate_form.css';
 import {Modal} from './Modal';
 import {FormSection} from './FormSection';
 import {StepContainer} from './StepContainer';
+import {StepFooterButtons} from './StepFooterButtons';
 
 
 
@@ -61,213 +61,198 @@ export class DonationFormStepOne extends React.Component {
         let label_classes = "col-xs-12 col-md-5 d-flex align-items-center";
         let input_classes = "col-xs-12 col-md-7";
          return (
-             <StepContainer id="form_step_one" setStyle={this.state.style} >
+             <StepContainer id="form_step_one" setStyle={this.state.style} step={1} >
                 <Modal show={this.state.show_modal} close={this.closeModal}  title="Whats is CSV?" >
                     <img alt="CSV helper" src="media/img/helper/credit-card-csv.png"/>
                     <p>The CSV Code (Card Security Value) is a three or four digit number that is unique to your credit or debit card.
                     The security code is close to 100% proof that a credit card is in your possession when ordering something on the phone or Internet.</p>
                 </Modal>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <StepView step={1}></StepView>
+                <FormSection id="amount_form" title={this.props.data.PaymentTypeLabel}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <p>{this.props.data.PaymentInstructions}</p>
+                                <p>{this.props.data.PaymentQuestion}</p>
+                            </div>
                         </div>
-                        <div className="col-12">
-                            <FormSection id="amount_form" title={this.props.data.PaymentTypeLabel}>
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <p>{this.props.data.PaymentInstructions}</p>
-                                            <p>{this.props.data.PaymentQuestion}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        {this.generateAmounts(this.props.data)}
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <p>{this.props.data.FrequencyInstructions}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        {this.generateFrequency(this.props.data)}
-                                    </div>
-                                </div>
-                            </FormSection>
-                            <FormSection id="form_card_information" title={this.props.data.PaymentTypeLabel + " Information"} >
-                                <div className="container">
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">Card Type</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <select className="form-control form-control-sm" name="cardType" 
-                                            onChange={this.props.handleChange}
-                                            value={this.props.previous_state.cardType} required>
-                                                {this.generateCreditCardTypes(this.props.data)}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">Card Number</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input id="card_number" className="form-control form-control-sm" type="text" placeholder="Card Number"
-                                            name="cardNumber" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.cardNumber} 
-                                            pattern={card_expressions[this.props.previous_state.cardType - 1]} 
-                                            onKeyPress={this.onlyNumbers} required></input>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">Card Verification Number</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input id="card_csv" className="form-control form-control-sm" type="text" placeholder="CSV" 
-                                            name="csv" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.csv} 
-                                            pattern="[0-9]{3}" maxLength={3} onKeyPress={this.isCSV} required></input>
-                                            <label className="csv_helper" onClick={this.openModal} >What is this?</label>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">Name On Card</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input id="card_name" className="form-control form-control-sm" type="text" placeholder="Name On Card"
-                                            name="nameOnCard" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.nameOnCard} 
-                                            pattern=".+[ ]+.+" required></input>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">Expiration Date</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input className="form-control form-control-sm expiration" type="number" placeholder="Month" min={1} max={12}
-                                            name="expirationDateMonth" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.expirationDateMonth}  required>
-                                                </input> / <input className="form-control form-control-sm expiration"  type="number" placeholder="Year"
-                                                min={parseInt(new Date().getFullYear().toString().substr(-2))} max={99} 
-                                                name="expirationDateYear" onChange={this.props.handleChange} 
-                                                value={this.props.previous_state.expirationDateYear}  required></input> 
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="">Contact Email Address</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input id="contact_email" className="form-control form-control-sm" type="email" placeholder="Contact Email Address"
-                                            name="contactEmail" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.contactEmail} 
-                                            pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*" ></input>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">Country</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <select className="form-control form-control-sm" onChange={this.handleCountryChange} 
-                                            name="country" value={this.props.previous_state.country} required>
-                                                {this.generateCountries()}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">Address 1</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input className="form-control form-control-sm" type="text" placeholder="Address" 
-                                            name="address1" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.address1} required></input>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="">Address 2</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input className="form-control form-control-sm" type="text" placeholder="Address"
-                                            name="address2" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.address2} ></input>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={label_classes}>
-                                            <label className="required">City</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input className="form-control form-control-sm" type="text" placeholder="City" 
-                                            name="city" onChange={this.props.handleChange} value={this.props.previous_state.city}
-                                            required ></input>
-                                        </div>
-                                    </div>
-                                    <div className="row us_related">
-                                        <div className={label_classes}>
-                                            <label className="required">State</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <select className="form-control form-control-sm" 
-                                            name="state" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.state} >
-                                                {this.generateStates()}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="row us_related">
-                                        <div className={label_classes}>
-                                            <label className="required">Zip Code</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input className="form-control form-control-sm zip_code" type="text" placeholder="Zip Code" 
-                                            name="zipCode" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.zipCode} onKeyPress={this.onlyNumbers} pattern="[0-9]{5}" 
-                                            title="Must have 5 digits" maxLength="5"  ></input>
-                                            <input id="zip_code_ext" className="form-control form-control-sm zip_code_ext" type="text" placeholder="Zip Code Extension"
-                                            name="zipCodeExtension" onChange={this.props.handleChange} 
-                                            value={this.props.previous_state.zipCodeExtension}  onKeyPress={this.onlyNumbers} pattern="[0-9]{4}" 
-                                            title="Must have 4 digits." maxLength="4"  ></input>
-                                        </div>
-                                    </div>
-                                    <div className="row no_us_related" style={{display: 'none'}}>
-                                        <div className={label_classes}>
-                                            <label className="required">Province</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input className="form-control form-control-sm" type="text" placeholder="Province" 
-                                            name="province" onChange={this.props.handleChange}  
-                                            value={this.props.previous_state.province} ></input>
-                                        </div>
-                                    </div>
-                                    <div className="row no_us_related" style={{display: 'none'}}>
-                                        <div className={label_classes}>
-                                            <label className="required">Postal Code</label>
-                                        </div>
-                                        <div className={input_classes}>
-                                            <input className="form-control form-control-sm" type="text" placeholder="Postal Code"
-                                            name="postalCode" onChange={this.props.handleChange} value={this.props.previous_state.postalCode} 
-                                            onKeyPress={this.onlyNumbers}  ></input>
-                                        </div>
-                                    </div>
-                                </div>
-                            </FormSection>
-                            <div className="container">
-                                <div className="row justify-content-end">
-                                    <div className="col-3 ">
-                                        <button onClick={this.handleNextStep} className="btn btn-sm btn-secondary" type="button">Next Step</button>
-                                    </div>
-                                </div>
+                        <div className="row">
+                            {this.generateAmounts(this.props.data)}
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
+                                <p>{this.props.data.FrequencyInstructions}</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            {this.generateFrequency(this.props.data)}
+                        </div>
+                    </div>
+                </FormSection>
+                <FormSection id="form_card_information" title={this.props.data.PaymentTypeLabel + " Information"} >
+                    <div className="container">
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">Card Type</label>
+                            </div>
+                            <div className={input_classes}>
+                                <select className="form-control form-control-sm" name="cardType" 
+                                onChange={this.props.handleChange}
+                                value={this.props.previous_state.cardType} required>
+                                    {this.generateCreditCardTypes(this.props.data)}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">Card Number</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input id="card_number" className="form-control form-control-sm" type="text" placeholder="Card Number"
+                                name="cardNumber" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.cardNumber} 
+                                pattern={card_expressions[this.props.previous_state.cardType - 1]} 
+                                onKeyPress={this.onlyNumbers} required></input>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">Card Verification Number</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input id="card_csv" className="form-control form-control-sm" type="text" placeholder="CSV" 
+                                name="csv" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.csv} 
+                                pattern="[0-9]{3}" maxLength={3} onKeyPress={this.isCSV} required></input>
+                                <label className="csv_helper" onClick={this.openModal} >What is this?</label>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">Name On Card</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input id="card_name" className="form-control form-control-sm" type="text" placeholder="Name On Card"
+                                name="nameOnCard" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.nameOnCard} 
+                                pattern=".+[ ]+.+" required></input>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">Expiration Date</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input className="form-control form-control-sm expiration" type="number" placeholder="Month" min={1} max={12}
+                                name="expirationDateMonth" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.expirationDateMonth}  required>
+                                    </input> / <input className="form-control form-control-sm expiration"  type="number" placeholder="Year"
+                                    min={parseInt(new Date().getFullYear().toString().substr(-2))} max={99} 
+                                    name="expirationDateYear" onChange={this.props.handleChange} 
+                                    value={this.props.previous_state.expirationDateYear}  required></input> 
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="">Contact Email Address</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input id="contact_email" className="form-control form-control-sm" type="email" placeholder="Contact Email Address"
+                                name="contactEmail" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.contactEmail} 
+                                pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*" ></input>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">Country</label>
+                            </div>
+                            <div className={input_classes}>
+                                <select className="form-control form-control-sm" onChange={this.handleCountryChange} 
+                                name="country" value={this.props.previous_state.country} required>
+                                    {this.generateCountries()}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">Address 1</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input className="form-control form-control-sm" type="text" placeholder="Address" 
+                                name="address1" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.address1} required></input>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="">Address 2</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input className="form-control form-control-sm" type="text" placeholder="Address"
+                                name="address2" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.address2} ></input>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={label_classes}>
+                                <label className="required">City</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input className="form-control form-control-sm" type="text" placeholder="City" 
+                                name="city" onChange={this.props.handleChange} value={this.props.previous_state.city}
+                                required ></input>
+                            </div>
+                        </div>
+                        <div className="row us_related">
+                            <div className={label_classes}>
+                                <label className="required">State</label>
+                            </div>
+                            <div className={input_classes}>
+                                <select className="form-control form-control-sm" 
+                                name="state" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.state} >
+                                    {this.generateStates()}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="row us_related">
+                            <div className={label_classes}>
+                                <label className="required">Zip Code</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input className="form-control form-control-sm zip_code" type="text" placeholder="Zip Code" 
+                                name="zipCode" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.zipCode} onKeyPress={this.onlyNumbers} pattern="[0-9]{5}" 
+                                title="Must have 5 digits" maxLength="5"  ></input>
+                                <input id="zip_code_ext" className="form-control form-control-sm zip_code_ext" type="text" placeholder="Zip Code Extension"
+                                name="zipCodeExtension" onChange={this.props.handleChange} 
+                                value={this.props.previous_state.zipCodeExtension}  onKeyPress={this.onlyNumbers} pattern="[0-9]{4}" 
+                                title="Must have 4 digits." maxLength="4"  ></input>
+                            </div>
+                        </div>
+                        <div className="row no_us_related" style={{display: 'none'}}>
+                            <div className={label_classes}>
+                                <label className="required">Province</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input className="form-control form-control-sm" type="text" placeholder="Province" 
+                                name="province" onChange={this.props.handleChange}  
+                                value={this.props.previous_state.province} ></input>
+                            </div>
+                        </div>
+                        <div className="row no_us_related" style={{display: 'none'}}>
+                            <div className={label_classes}>
+                                <label className="required">Postal Code</label>
+                            </div>
+                            <div className={input_classes}>
+                                <input className="form-control form-control-sm" type="text" placeholder="Postal Code"
+                                name="postalCode" onChange={this.props.handleChange} value={this.props.previous_state.postalCode} 
+                                onKeyPress={this.onlyNumbers}  ></input>
                             </div>
                         </div>
                     </div>
-                </div>
+                </FormSection>
+                <StepFooterButtons right="Next Step" right_action={this.handleNextStep} />
              </StepContainer>
          );
     }
