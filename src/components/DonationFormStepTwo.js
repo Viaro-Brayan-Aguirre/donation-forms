@@ -4,6 +4,7 @@ import '../css/donate_form.css';
 import ReactDOM from 'react-dom';
 import {Toast} from './Toast';
 import {FormSection} from './FormSection';
+import {StepContainer} from './StepContainer';
 
 
 export class DonationFormStepTwo extends React.Component {
@@ -14,48 +15,46 @@ export class DonationFormStepTwo extends React.Component {
         this.handleNextStep = this.handleNextStep.bind(this);
         this.generateItemList = this.generateItemList.bind(this);
         this.handleListCheck = this.handleListCheck.bind(this);
-        this.state = {restored: false}
+        this.state = {restored: false,
+            style: {display: 'none'}}
     }
     
     render(){
     return(
-    <div className="container form_full_height" id="form_step_two" style={{display: 'none'}}>
-        <div className="row form_full_height" >
-            <div className="col-12 col-xs-12 col-md-12 col-lg-8 col-xl-7 d-flex align-items-center form-container">     
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <StepView step={2}></StepView>
-                        </div>
-                        <div className="col-12">
-                            <FormSection title={this.props.panel_data.PanelTitle}>
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-12 form_section_list_container">
-                                            {this.generateItemList()}
-                                        </div>
+        <StepContainer id="form_step_two" setStyle={this.state.style}>
+            <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <StepView step={2}></StepView>
+                    </div>
+                    <div className="col-12">
+                        <FormSection title={this.props.panel_data.PanelTitle}>
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-12 form_section_list_container">
+                                        {this.generateItemList()}
                                     </div>
                                 </div>
-                            </FormSection>
-                            <div className="container">
-                                <div className="row ">
-                                    <div className="col-3 ">
-                                        <button onClick={this.handlePreviousStep} className="btn btn-sm btn-secondary" type="button">Prev Step</button>
-                                    </div>
-                                    <div className="col-6">
+                            </div>
+                        </FormSection>
+                        <div className="container">
+                            <div className="row ">
+                                <div className="col-3 ">
+                                    <button onClick={this.handlePreviousStep} className="btn btn-sm btn-secondary" type="button">Prev Step</button>
+                                </div>
+                                <div className="col-6">
 
-                                    </div>
-                                    <div className="col-3  ">
-                                        <button onClick={this.handleNextStep} className="btn btn-sm btn-secondary" type="button">Next Step</button>
-                                    </div>
+                                </div>
+                                <div className="col-3  ">
+                                    <button onClick={this.handleNextStep} className="btn btn-sm btn-secondary" type="button">Next Step</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> );
+        </StepContainer>
+     );
     }
     
 

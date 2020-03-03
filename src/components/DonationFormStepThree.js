@@ -1,7 +1,7 @@
 import React from 'react';
 import { StepView } from './StepView';
 import {FormSection} from './FormSection';
-
+import {StepContainer} from './StepContainer';
 
 
 export class DonationFormStepThree extends React.Component {
@@ -21,46 +21,42 @@ export class DonationFormStepThree extends React.Component {
         let btn_edit1 = <button onClick={this.goToStepOne} className="btn btn-sm btn-secondary btn_edit">Edit <i className="fa fa-pencil"></i></button>;
         let btn_edit2 = <button onClick={this.goToStepTwo} className="btn btn-sm btn-secondary btn_edit">Edit <i className="fa fa-pencil"></i></button>;
         return (
-            <div className="container form_full_height" id="form_step_three" >
-                <div className="row form_full_height" >
-                    <div className="col-12 col-xs-12 col-md-12 col-lg-8 col-xl-7 d-flex align-items-center form-container">     
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-12">
-                                    <StepView step={3}></StepView>
+            <StepContainer id="form_step_three">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12">
+                            <StepView step={3}></StepView>
+                        </div>
+                        <div className="col-12">
+                            <FormSection title="Payment Details" title_child={btn_edit1}>
+                                <div className="container">
+                                        {this.renderFormOneDetail(this.props.form_data.form_one)}
                                 </div>
-                                <div className="col-12">
-                                    <FormSection title="Payment Details" title_child={btn_edit1}>
-                                        <div className="container">
-                                                {this.renderFormOneDetail(this.props.form_data.form_one)}
-                                        </div>
-                                    </FormSection>
-                                    <FormSection title="Charity Details" title_child={btn_edit2}>
-                                        <div className="container">
-                                            <div className="row">
-                                                {this.renderFormTwoDetail(this.props.form_data)}
-                                            </div>
-                                        </div>
-                                    </FormSection>
-                                    <div className="container">
-                                        <div className="row ">
-                                            <div className="col-3 ">
-                                                <button onClick={this.handlePreviousStep} className="btn btn-sm btn-secondary" type="button">Prev Step</button>
-                                            </div>
-                                            <div className="col-6">
+                            </FormSection>
+                            <FormSection title="Charity Details" title_child={btn_edit2}>
+                                <div className="container">
+                                    <div className="row">
+                                        {this.renderFormTwoDetail(this.props.form_data)}
+                                    </div>
+                                </div>
+                            </FormSection>
+                            <div className="container">
+                                <div className="row ">
+                                    <div className="col-3 ">
+                                        <button onClick={this.handlePreviousStep} className="btn btn-sm btn-secondary" type="button">Prev Step</button>
+                                    </div>
+                                    <div className="col-6">
 
-                                            </div>
-                                            <div className="col-3  ">
-                                                <button onClick={this.handleNextStep} className="btn btn-sm btn-secondary" type="button">Finish</button>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div className="col-3  ">
+                                        <button onClick={this.handleNextStep} className="btn btn-sm btn-secondary" type="button">Finish</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </StepContainer>
         );
     }
 
