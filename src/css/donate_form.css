@@ -258,6 +258,12 @@
 .form-container .form_section .form_section_content .list_content:last-child .span_minimum {
   top: -21px;
 }
+.form-container .form_section .form_section_content .no_us_related.hide, .form-container .form_section .form_section_content .us_related.hide {
+  display: none;
+}
+.form-container .form_section .form_section_content .no_us_related.show, .form-container .form_section .form_section_content .us_related.show {
+  display: flex;
+}
 .form-container .form_section.show .maximize {
   display: none;
 }

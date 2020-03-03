@@ -3,7 +3,7 @@ import { DonationFormStepThree } from '../components/DonationFormStepThree';
 import Utils from './Utils';
 import DonationAPI from '../services/DonationAPI';
 
-let ip_address = "";
+//let ip_address = "";
 export class DonationFormStepThreeContainer extends React.Component {
 
     constructor(props){

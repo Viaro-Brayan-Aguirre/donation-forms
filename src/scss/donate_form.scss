@@ -314,6 +314,14 @@ $border-radius: 5px;
                 }
             }
 
+            .no_us_related.hide, .us_related.hide {
+                display: none;
+            }
+
+            .no_us_related.show, .us_related.show {
+                display: flex;
+            }
+
         }
     }
 

@@ -60,6 +60,10 @@ export class DonationFormStepOne extends React.Component {
     render(){
         let label_classes = "col-xs-12 col-md-5 d-flex align-items-center";
         let input_classes = "col-xs-12 col-md-7";
+        let us_related_classes = "row us_related " +  (this.props.previous_state.country === 'us' ? 'show' : 'hide');
+        let no_us_related_classes = "row no_us_related " +  (this.props.previous_state.country !== 'us' ? 'show' : 'hide');
+        let us_required = (this.props.previous_state.country === 'us');
+
          return (
              <StepContainer id="form_step_one" setStyle={this.state.style} step={1} >
                 <Modal show={this.state.show_modal} close={this.closeModal}  title="Whats is CSV?" >
@@ -203,7 +207,7 @@ export class DonationFormStepOne extends React.Component {
                                 required ></input>
                             </div>
                         </div>
-                        <div className="row us_related">
+                        <div className={us_related_classes} >
                             <div className={label_classes}>
                                 <label className="required">State</label>
                             </div>
@@ -215,7 +219,7 @@ export class DonationFormStepOne extends React.Component {
                                 </select>
                             </div>
                         </div>
-                        <div className="row us_related">
+                        <div className={us_related_classes}>
                             <div className={label_classes}>
                                 <label className="required">Zip Code</label>
                             </div>
@@ -223,31 +227,36 @@ export class DonationFormStepOne extends React.Component {
                                 <input className="form-control form-control-sm zip_code" type="text" placeholder="Zip Code" 
                                 name="zipCode" onChange={this.props.handleChange} 
                                 value={this.props.previous_state.zipCode} onKeyPress={this.onlyNumbers} pattern="[0-9]{5}" 
-                                title="Must have 5 digits" maxLength="5"  ></input>
+                                title="Must have 5 digits" maxLength="5"  
+                                required={us_required}
+                                ></input>
                                 <input id="zip_code_ext" className="form-control form-control-sm zip_code_ext" type="text" placeholder="Zip Code Extension"
                                 name="zipCodeExtension" onChange={this.props.handleChange} 
                                 value={this.props.previous_state.zipCodeExtension}  onKeyPress={this.onlyNumbers} pattern="[0-9]{4}" 
-                                title="Must have 4 digits." maxLength="4"  ></input>
+                                title="Must have 4 digits." maxLength="4" 
+                                 ></input>
                             </div>
                         </div>
-                        <div className="row no_us_related" style={{display: 'none'}}>
+                        <div className={no_us_related_classes} >
                             <div className={label_classes}>
                                 <label className="required">Province</label>
                             </div>
                             <div className={input_classes}>
                                 <input className="form-control form-control-sm" type="text" placeholder="Province" 
                                 name="province" onChange={this.props.handleChange}  
-                                value={this.props.previous_state.province} ></input>
+                                value={this.props.previous_state.province} 
+                                required={!us_required} ></input>
                             </div>
                         </div>
-                        <div className="row no_us_related" style={{display: 'none'}}>
+                        <div className={no_us_related_classes} >
                             <div className={label_classes}>
                                 <label className="required">Postal Code</label>
                             </div>
                             <div className={input_classes}>
                                 <input className="form-control form-control-sm" type="text" placeholder="Postal Code"
                                 name="postalCode" onChange={this.props.handleChange} value={this.props.previous_state.postalCode} 
-                                onKeyPress={this.onlyNumbers}  ></input>
+                                onKeyPress={this.onlyNumbers} 
+                                required={!us_required} ></input>
                             </div>
                         </div>
                     </div>
@@ -350,6 +359,7 @@ export class DonationFormStepOne extends React.Component {
         if(data.CreditCardTypeList == null){
             return (<option></option>)
         }
+        let card_types = ["Visa","Master Card","American Express","Discover","Diners Club"];
         let i = 0;
         return data.CreditCardTypeList.map(type => {
             let text = "";
@@ -357,25 +367,7 @@ export class DonationFormStepOne extends React.Component {
             if(i === 1){
                 default_card_type = type;
             }
-            switch(type){
-                case 1:
-                    text = "Visa";
-                    break;
-                case 2:
-                    text = "Master Card";
-                    break;
-                case 3:
-                    text = "American Express";
-                    break;
-                case 4:
-                    text = "Discover";
-                    break;
-                case 5:
-                    text = "Diners Club";   
-                    break;
-                default:
-            }
-        return <option key={i} value={type}>{text}</option>
+            return <option key={i} value={type}>{card_types[type - 1]}</option>
         });
 
     }
@@ -493,27 +485,12 @@ export class DonationFormStepOne extends React.Component {
         if(data.FrequencyTypeList == null){
             return (<div></div>)
         }
+        let frequency_types = ["One-time", "Monthly","Quarterly","Semi-annual"   ];
         var i = 0;
         let frequency_classes = "frequency col-6 col-sm-6 col-md-3 col-lg-3";
         var pre_value = this.props.previous_state.frequency;
         return data.FrequencyTypeList.map( frequency => {
             i++;
-            var frequency_text = "";
-            switch(frequency){
-                case 1:
-                    frequency_text = "One-time";
-                    break;
-                case 2:
-                    frequency_text = "Monthly";
-                    break;
-                case 3:
-                    frequency_text = "Quarterly";
-                    break;
-                case 4:
-                    frequency_text = "Semi-annual";
-                    break;
-                default:
-            }
             if(i === 1 && !this.state.send_default_frequency){
                 default_frequency = frequency;
                 pre_value = frequency;
@@ -522,7 +499,7 @@ export class DonationFormStepOne extends React.Component {
                 <div className={frequency_classes}  key={i}>
                     <div className="frequency_container">
                         <input className="check" type="radio" name="frequency" onChange={this.props.handleChange} value={frequency} 
-                        defaultChecked={(parseInt(pre_value) === parseInt(frequency))}/><label>{frequency_text}</label>
+                        defaultChecked={(parseInt(pre_value) === parseInt(frequency))}/><label>{frequency_types[parseInt(frequency) - 1]}</label>
                     </div>
                 </div>);
         });
@@ -540,36 +517,11 @@ export class DonationFormStepOne extends React.Component {
         evt.target = {};
         evt.target.value = "";
         if(code === 'us'){
-            document.querySelectorAll('.us_related').forEach(component => {
-                component.style.display = 'flex';
-            });
-            document.querySelectorAll('.us_related input').forEach(component => {
-                component.required = true;
-            });
-            document.getElementById('zip_code_ext').required = false;
-            document.querySelectorAll('.no_us_related').forEach(component => {
-                component.style.display = 'none';
-            });
-            document.querySelectorAll('.no_us_related input').forEach(component => {
-                component.required = false;
-            });
             evt.target.name = "province";
             this.props.handleChange(evt);
             evt.target.name = "postalCode";
             this.props.handleChange(evt);
         } else {
-            document.querySelectorAll('.us_related').forEach(component => {
-                component.style.display = 'none ';
-            });
-            document.querySelectorAll('.us_related input').forEach(component => {
-                component.required = false;
-            });
-            document.querySelectorAll('.no_us_related').forEach(component => {
-                component.style.display = 'flex';
-            });
-            document.querySelectorAll('.no_us_related input').forEach(component => {
-                component.required = true;
-            });
             evt.target.name = "zipCode";
             this.props.handleChange(evt);
             evt.target.name = "zipCodeExtension";
@@ -597,30 +549,3 @@ export class DonationFormStepOne extends React.Component {
     }
 
 }
-
-/*
-<div className="container">
-    <div className="row" >
-        <div className="col-12 col-xs-12 col-md-12 col-lg-10 col-xl-10 d-flex align-items-center form_out_container">
-            <div className="form-container">
-                <show-step step="1"></show-step>
-                
-                <div className="section_container" style="display: none;" id="section_1">
-                    <div className="section_title_container">
-                        <label className="section_title">{{info.PaymentTypeLabel}}</label>
-                    </div>
-                    <div className="section_content">
-                        <p className="instructions">{{info.PaymentInstructions}}</p>
-                        <p className="questions">{{info.PaymentQuestion}}</p>
-                        <div className="amount_container">
-                            <div ng-repeat="amount in info.AmountQuestions.AmountOptions">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <p> {{ info }}</p> -->
-            </div>
-        </div>
-    </div>
-</div>*/
