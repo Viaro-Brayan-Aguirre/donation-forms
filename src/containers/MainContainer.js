@@ -52,7 +52,6 @@ export class MainContainer extends React.Component {
             ReactDOM.render(<LoginContainer></LoginContainer>);
             return; 
         }
-        //<!-- <MenuContainer></MenuContainer> -->
         return (
             <div className="root_container">
                 <MenuContainer storeState={this.saveState} getState={this.getState} pageChange={this.handleChangePage} ></MenuContainer>

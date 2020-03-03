@@ -50,11 +50,10 @@ export class DonationFormStepTwo extends React.Component {
             return <div></div>;
         } 
         var select_value = this.props.previous_state.agency; 
-        let i = 0;
+        let agency_key = 1;
         return this.props.panel_data.PanelItemList.map(item => {
-            i++;
             return (
-                <div key={i} className="list_content" onClick={this.handleListCheck} data-minimum={item.MinimumDonation} >
+                <div key={++agency_key} className="list_content" onClick={this.handleListCheck} data-minimum={item.MinimumDonation} >
                     <label><input defaultChecked={item.EntityId === select_value} type="radio" name="agency" value={item.EntityId}></input> {item.Name} </label>
                     <div className={"min_amount  " + (this.props.pre_selected_amount >= item.MinimumDonation ? 'ok_amount' : '')}
                     >$ {item.MinimumDonation} <span className="span_minimum">Minimum amount for donate</span></div>
@@ -66,9 +65,9 @@ export class DonationFormStepTwo extends React.Component {
     handleListCheck(e){
         var selected = document.querySelectorAll('.selected_element'); 
         if(selected !== null && selected.length > 0){
-            var i = selected.length;
-            while(i--){
-                selected[i].classList.remove("selected_element");
+            var aux_index = selected.length;
+            while(aux_index--){
+                selected[aux_index].classList.remove("selected_element");
             }
         }
         e.target.classList.add("selected_element");    

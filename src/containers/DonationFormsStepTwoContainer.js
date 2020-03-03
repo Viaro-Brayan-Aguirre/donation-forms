@@ -29,11 +29,11 @@ export class DonationFormsStepTwoContainer extends React.Component {
         form_state[e.target.name] = e.target.value;
         //if is and agency option 
         if(e.target.name === 'agency' && this.state.panel_data != null){
-            let i = this.state.panel_data.PanelItemList.length; 
+            let agency_index = this.state.panel_data.PanelItemList.length; 
             let found = false;
-            while(i--){
-                if(this.state.panel_data.PanelItemList[i].EntityId === e.target.value){
-                    form_state["agency_data"] = this.state.panel_data.PanelItemList[i];
+            while(agency_index--){
+                if(this.state.panel_data.PanelItemList[agency_index].EntityId === e.target.value){
+                    form_state["agency_data"] = this.state.panel_data.PanelItemList[agency_index];
                     found = true;
                     break;
                 }

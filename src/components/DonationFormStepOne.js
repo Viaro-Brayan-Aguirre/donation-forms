@@ -334,24 +334,22 @@ export class DonationFormStepOne extends React.Component {
     }
 
     generateCountries(){
-        let i = 0;
+        let country_key = 1;
         return this.props.countries.map(country => {
-            i++;
-            if(i === 1){
+            if(country_key === 1){
                 default_country = country.ISO;
             }
-            return <option key={i} value={country.ISO}>{country.CountryName}</option>
+            return <option key={'country-' + ++country_key} value={country.ISO}>{country.CountryName}</option>
         });
     }
 
     generateStates(){
-        let i = 0;
+        let state_key = 1;
         return this.props.us_states.map(state => {
-            i++;
-            if(i === 1){
+            if(state_key === 1){
                 default_state = state.Code;
             }
-            return <option key={i} value={state.Code}>{state.Name}</option>
+            return <option key={'state-' + ++state_key} value={state.Code}>{state.Name}</option>
         });
     }
 
@@ -360,14 +358,12 @@ export class DonationFormStepOne extends React.Component {
             return (<option></option>)
         }
         let card_types = ["Visa","Master Card","American Express","Discover","Diners Club"];
-        let i = 0;
+        let credit_card_key = 1;
         return data.CreditCardTypeList.map(type => {
-            let text = "";
-            i++;
-            if(i === 1){
+            if(credit_card_key === 1){
                 default_card_type = type;
             }
-            return <option key={i} value={type}>{card_types[type - 1]}</option>
+            return <option key={'CC-' + ++credit_card_key} value={type}>{card_types[type - 1]}</option>
         });
 
     }
@@ -443,21 +439,18 @@ export class DonationFormStepOne extends React.Component {
         if(data.AmountQuestions == null){
             return (<div></div>)
         }
-        let i = 0;
+        let amount_key = 1;
         let amount_classes = "amount col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4"; 
         var pre_value = this.props.previous_state.amount;
         return data.AmountQuestions[0].AmountOptions.map( amount => {
-            i++;
             var is_custom_value = false;
-            if(i === 1 && !this.state.send_default_amount //have not set a default value upper
-                
-                ){
+            if(amount_key === 1 && !this.state.send_default_amount  ){
                 default_amount = amount.Amount; //only one time
                 pre_value = amount.Amount;
             }
             if(amount.AmountLabel.length > 0){
                 return (
-                    <div className={amount_classes}  key={i}>
+                    <div className={amount_classes}  key={'amount-' +  ++amount_key}>
                         <div className="amount_container">
                             <input className="check" type="radio" name="amount" onChange={this.handlesChangeAmount} value={amount.Amount} 
                             defaultChecked={( parseFloat(amount.Amount) === parseFloat( pre_value)  )} /><label>{amount.AmountLabel}</label>
@@ -465,7 +458,7 @@ export class DonationFormStepOne extends React.Component {
                     </div>);
             } 
             return (
-                <div className={amount_classes} key={i}>
+                <div className={amount_classes} key={'amount-' + ++amount_key}>
                     <div className="amount_container">
                         <input id="custom_amount_radio"  type="radio" name="amount" value={amount.Amount} 
                         onChange={this.handlesChangeAmount}
@@ -486,17 +479,16 @@ export class DonationFormStepOne extends React.Component {
             return (<div></div>)
         }
         let frequency_types = ["One-time", "Monthly","Quarterly","Semi-annual"   ];
-        var i = 0;
+        var frequency_key = 1;
         let frequency_classes = "frequency col-6 col-sm-6 col-md-3 col-lg-3";
         var pre_value = this.props.previous_state.frequency;
         return data.FrequencyTypeList.map( frequency => {
-            i++;
-            if(i === 1 && !this.state.send_default_frequency){
+            if(frequency_key === 1 && !this.state.send_default_frequency){
                 default_frequency = frequency;
                 pre_value = frequency;
             }
             return (
-                <div className={frequency_classes}  key={i}>
+                <div className={frequency_classes}  key={'freq-'+ ++frequency_key}>
                     <div className="frequency_container">
                         <input className="check" type="radio" name="frequency" onChange={this.props.handleChange} value={frequency} 
                         defaultChecked={(parseInt(pre_value) === parseInt(frequency))}/><label>{frequency_types[parseInt(frequency) - 1]}</label>

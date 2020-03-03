@@ -31,19 +31,19 @@ var controlRequest = function(target_function,input_params, ok_callback, bad_cal
 };
 
 var clean_stack = function(completed){
-    var i = completed.length; 
-    while(i > 0 ){
-      i--;
-      stack_of_request.splice(completed[i],1);
+    var completed_index = completed.length; 
+    while(completed_index > 0 ){
+      completed_index--;
+      stack_of_request.splice(completed[completed_index],1);
     }
   };
 
   var sendRequest =  function (target_id){
     var completed_task = [];
     var max = stack_of_request.length; 
-    var i = 0;
-    while(i <  max){
-        var val = stack_of_request[i];
+    var request_aux = 0;
+    while(request_aux <  max){
+        var val = stack_of_request[request_aux];
         if(val.request_id === target_id){
             //send request again
             val.retries++;
@@ -57,9 +57,9 @@ var clean_stack = function(completed){
             
           }
           if(val.status === 'C'){
-            completed_task.push(i);
+            completed_task.push(request_aux);
           }
-        i++;
+          request_aux++;
     }
     clean_stack(completed_task);
   }
@@ -67,28 +67,28 @@ var clean_stack = function(completed){
   var sendRequestFail =  function (target_id){
     var completed_task = [];
     var max = stack_of_request.length; 
-    var i = 0;
-    while(i <  max){
-        var val = stack_of_request[i];
+    var task_index = 0;
+    while(task_index <  max){
+        var val = stack_of_request[task_index];
         if(val.request_id === target_id){
             val.status = 'C'
             val.bad_callback();
             return false; //break
         }
         if(val.status === 'C'){
-            completed_task.push(i);
+            completed_task.push(task_index);
         }
-        i++;
+        task_index++;
     }
     clean_stack(completed_task);
   }
 
   function setRequestOk(target_id){
-    var i = stack_of_request.length; 
-    while(i > 0 ){
-      i--;
-      if(stack_of_request[i].request_id === target_id){
-        stack_of_request.splice(stack_of_request[i],1);
+    var stack_index = stack_of_request.length; 
+    while(stack_index > 0 ){
+      stack_index--;
+      if(stack_of_request[stack_index].request_id === target_id){
+        stack_of_request.splice(stack_of_request[stack_index],1);
         break;
       }
     }
