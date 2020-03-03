@@ -1,7 +1,7 @@
 import React from 'react'; 
 import { DonationFormStepThree } from '../components/DonationFormStepThree';
 import Utils from './Utils';
-import DonationAPI from '../services/DonationAPI';
+//import DonationAPI from '../services/DonationAPI';
 
 //let ip_address = "";
 export class DonationFormStepThreeContainer extends React.Component {
@@ -99,11 +99,11 @@ export class DonationFormStepThreeContainer extends React.Component {
             "CustomField6" : form_one.csv
         };
         console.log("Object: ", request_object);
-        let ok = function(){
+        /*let ok = function(){
             console.log("O");
         }
-        DonationAPI.saveDonation(request_object,ok,ok);
-        Utils.unlockScreen();
+        //DonationAPI.saveDonation(request_object,ok,ok);*/
+        this.props.changeStep(4);
     }
 
     

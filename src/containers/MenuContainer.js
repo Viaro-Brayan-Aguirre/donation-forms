@@ -9,6 +9,7 @@ import Utils from './Utils';
 import { DonationFormStepOneContainer } from './DonationFormStepOneContainer';
 import { DonationFormsStepTwoContainer } from './DonationFormsStepTwoContainer';
 import { DonationFormStepThreeContainer } from './DonationFormStepThreeContainer';
+import {ThankYou } from '../components/ThanksForDonate';
 
 export class MenuContainer extends React.Component {
 
@@ -27,11 +28,16 @@ export class MenuContainer extends React.Component {
     }
 
     handleDonation(){
+        console.log("STEP: ",this.state.actual_step);
         this.handleChangeStep(this.state.actual_step);
     }
 
     handleChangeStep(target_step){
-        this.setState({actual_step: target_step});
+        if(target_step === 4 ){
+            this.setState({actual_step: 1});
+        } else {
+            this.setState({actual_step: target_step});
+        }
         switch(target_step){
             case 1:
                 this.props.pageChange(<DonationFormStepOneContainer 
@@ -53,6 +59,10 @@ export class MenuContainer extends React.Component {
                     getState={this.props.getState} 
                     changeStep={this.handleChangeStep}
                 />);
+                break;
+            case 4: 
+                //clean states to restart app
+                this.props.pageChange(<ThankYou saveState={this.props.storeState}  handleClick={this.handleMainPage}></ThankYou>);
                 break;
             default:
                 this.handleMainPage();
