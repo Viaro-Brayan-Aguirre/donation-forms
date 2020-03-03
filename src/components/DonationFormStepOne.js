@@ -1,6 +1,7 @@
 import React from 'react'; 
 import {StepView} from './StepView'; 
 import '../css/donate_form.css';
+import {Modal} from './Modal';
 
 
 
@@ -29,7 +30,8 @@ export class DonationFormStepOne extends React.Component {
             send_default_country: false, 
             send_default_state: false,
             send_fault_card_type: false,
-            country_selected: false
+            country_selected: false,
+            show_modal: false
         }
 
         this.generateAmounts  = this.generateAmounts.bind(this);
@@ -40,6 +42,8 @@ export class DonationFormStepOne extends React.Component {
         this.handleChangeCustomAmount = this.handleChangeCustomAmount.bind(this);
         this.handleNextStep = this.handleNextStep.bind(this);
         this.setFieldsBasedOnCountry = this.setFieldsBasedOnCountry.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
 
@@ -55,15 +59,12 @@ export class DonationFormStepOne extends React.Component {
         parent.classList.add('hide'); 
     }
 
-    showHelper(){
-        document.getElementById('csv_helper').style.display = 'block';
-        document.getElementById('csv_helper_p2').style.display = 'block';
-        
+    openModal(){
+        this.setState({show_modal: true})
     }
 
-    hideHelper(){
-        document.getElementById('csv_helper').style.display = 'none';
-        document.getElementById('csv_helper_p2').style.display = 'none';
+    closeModal(){
+        this.setState({show_modal: false});
     }
 
     render(){
@@ -73,20 +74,11 @@ export class DonationFormStepOne extends React.Component {
         <div className="container form_full_height" id="form_step_one" style={{display: 'none'}}>
             <div className="row form_full_height" >
                 <div className="col-12 col-xs-12 col-md-12 col-lg-8 col-xl-7 d-flex align-items-center form-container"> 
-                    <div id="csv_helper" onClick={this.hideHelper} className="helper_background" style={{display: 'none'}}>
-                    </div>
-                    <div id="csv_helper_p2"  className="helper_container" style={{display: 'none'}}>
-                        <div className="helper_title_section">
-                            <i className="close_helper fa  fa-times " onClick={this.hideHelper} ></i>
-                            <div className="helper_title">Whats is CSV?</div>
-                        </div>
-                        <div className="helper_content_container">
-                            <img alt="CSV helper" src="media/img/helper/credit-card-csv.png"/>
-                            <p>The CSV Code (Card Security Value) is a three or four digit number that is unique to your credit or debit card.
-                                The security code is close to 100% proof that a credit card is in your possession when ordering something on the phone or Internet.</p>
-                        </div>
-                    </div>
-                    
+                    <Modal show={this.state.show_modal} close={this.closeModal}  title="Whats is CSV?" >
+                        <img alt="CSV helper" src="media/img/helper/credit-card-csv.png"/>
+                        <p>The CSV Code (Card Security Value) is a three or four digit number that is unique to your credit or debit card.
+                        The security code is close to 100% proof that a credit card is in your possession when ordering something on the phone or Internet.</p>
+                    </Modal>
                     <div className="container">
                         <div className="row">
                             <div className="col-12">
@@ -162,7 +154,7 @@ export class DonationFormStepOne extends React.Component {
                                                     name="csv" onChange={this.props.handleChange} 
                                                     value={this.props.previous_state.csv} 
                                                     pattern="[0-9]{3}" maxLength={3} onKeyPress={this.isCSV} required></input>
-                                                    <label className="csv_helper" onClick={this.showHelper} >What is this?</label>
+                                                    <label className="csv_helper" onClick={this.openModal} >What is this?</label>
                                                 </div>
                                             </div>
                                             <div className="row">
