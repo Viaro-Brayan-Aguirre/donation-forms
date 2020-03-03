@@ -3,6 +3,7 @@ import {StepView} from './StepView';
 import '../css/donate_form.css';
 import ReactDOM from 'react-dom';
 import {Toast} from './Toast';
+import {FormSection} from './FormSection';
 
 
 export class DonationFormStepTwo extends React.Component {
@@ -27,22 +28,15 @@ export class DonationFormStepTwo extends React.Component {
                             <StepView step={2}></StepView>
                         </div>
                         <div className="col-12">
-                            <form  className="form_section show">
-                                <div className="form_section_title">
-                                    <i className="maximize fa fa-chevron-down" onClick={this.maximize}></i>
-                                    <i className="minimize fa fa-chevron-up " onClick={this.minimize}></i>
-                                    <div className="section_title">{this.props.panel_data.PanelTitle}</div>
-                                </div>
-                                <div className="form_section_content">
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="col-12 form_section_list_container">
-                                                {this.generateItemList()}
-                                            </div>
+                            <FormSection title={this.props.panel_data.PanelTitle}>
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-12 form_section_list_container">
+                                            {this.generateItemList()}
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </FormSection>
                             <div className="container">
                                 <div className="row ">
                                     <div className="col-3 ">
@@ -69,19 +63,6 @@ export class DonationFormStepTwo extends React.Component {
         if(this.props.panel_data != null){
             document.getElementById('form_step_two').style.display = 'block';
         }
-    }
-
-
-    maximize(e){
-        var parent = e.target.parentNode.parentNode;
-        parent.classList.remove('hide'); 
-        parent.classList.add('show'); 
-    }
-
-    minimize(e){
-        var parent = e.target.parentNode.parentNode;
-        parent.classList.remove('show'); 
-        parent.classList.add('hide'); 
     }
 
     generateItemList(){

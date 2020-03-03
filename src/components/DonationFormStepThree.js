@@ -1,5 +1,6 @@
 import React from 'react';
 import { StepView } from './StepView';
+import {FormSection} from './FormSection';
 
 
 
@@ -15,8 +16,10 @@ export class DonationFormStepThree extends React.Component {
     }
 
 
-    render(){
 
+    render(){
+        let btn_edit1 = <button onClick={this.goToStepOne} className="btn btn-sm btn-secondary btn_edit">Edit <i className="fa fa-pencil"></i></button>;
+        let btn_edit2 = <button onClick={this.goToStepTwo} className="btn btn-sm btn-secondary btn_edit">Edit <i className="fa fa-pencil"></i></button>;
         return (
             <div className="container form_full_height" id="form_step_three" >
                 <div className="row form_full_height" >
@@ -27,36 +30,18 @@ export class DonationFormStepThree extends React.Component {
                                     <StepView step={3}></StepView>
                                 </div>
                                 <div className="col-12">
-                                    <form  className="form_section show">
-                                        <div className="form_section_title">
-                                            <i className="maximize fa fa-chevron-down" onClick={this.maximize}></i>
-                                            <i className="minimize fa fa-chevron-up " onClick={this.minimize}></i>
-                                            <div className="section_title">Payment Details
-                                                <button onClick={this.goToStepOne} className="btn btn-sm btn-secondary btn_edit">Edit <i className="fa fa-pencil"></i></button>
-                                            </div>
-                                        </div>
-                                        <div className="form_section_content">
-                                            <div className="container">
+                                    <FormSection title="Payment Details" title_child={btn_edit1}>
+                                        <div className="container">
                                                 {this.renderFormOneDetail(this.props.form_data.form_one)}
+                                        </div>
+                                    </FormSection>
+                                    <FormSection title="Charity Details" title_child={btn_edit2}>
+                                        <div className="container">
+                                            <div className="row">
+                                                {this.renderFormTwoDetail(this.props.form_data)}
                                             </div>
                                         </div>
-                                    </form>
-                                    <form  className="form_section show">
-                                        <div className="form_section_title">
-                                            <i className="maximize fa fa-chevron-down" onClick={this.maximize}></i>
-                                            <i className="minimize fa fa-chevron-up " onClick={this.minimize}></i>
-                                            <div className="section_title">Charity Details 
-                                                <button onClick={this.goToStepTwo} className="btn btn-sm btn-secondary btn_edit">Edit <i className="fa fa-pencil"></i></button>
-                                            </div>
-                                        </div>
-                                        <div className="form_section_content">
-                                            <div className="container">
-                                                <div className="row">
-                                                    {this.renderFormTwoDetail(this.props.form_data)}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    </FormSection>
                                     <div className="container">
                                         <div className="row ">
                                             <div className="col-3 ">
@@ -188,16 +173,5 @@ export class DonationFormStepThree extends React.Component {
         this.props.confirmDonation();
     }
 
-    maximize(e){
-        var parent = e.target.parentNode.parentNode;
-        parent.classList.remove('hide'); 
-        parent.classList.add('show'); 
-    }
-
-    minimize(e){
-        var parent = e.target.parentNode.parentNode;
-        parent.classList.remove('show'); 
-        parent.classList.add('hide'); 
-    }
 
 }
