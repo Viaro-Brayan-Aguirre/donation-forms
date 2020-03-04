@@ -16,10 +16,33 @@ var findIP = new Promise(r=>{var w=window,a=new (w.RTCPeerConnection||w.mozRTCPe
 /*Usage example*/
 findIP.then(ip => console.log('your ip: ', ip)).catch(e => console.error(e))
 
+
+var getTotalAmount  = function(frequency, pledge ){
+    switch(parseInt(frequency)){
+        case 1:
+            return pledge;
+        case 2: 
+            return 12 * pledge;
+        case 3 : 
+            return 4 * pledge;
+        case 4: 
+            return 2 * pledge;
+        default:
+            return "Please review frequency"
+    }
+}
+
+var getTypeOfPayment = function(type){
+    let payment_type = ["Cero","One","Credit card","three","Four","Cash","Six","Seven"];
+    return payment_type[type];
+}
+
 const Utils = {
     lockScreen: function(){document.getElementsByClassName('lock_screen')[0].style.display = 'block';},
     unlockScreen: function(){document.getElementsByClassName('lock_screen')[0].style.display = 'none';},
     findIP: findIP,
+    getTotalAmount: getTotalAmount,
+    getTypeOfPayment: getTypeOfPayment,
     main_template : main_template
 };
 

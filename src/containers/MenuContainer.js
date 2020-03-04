@@ -10,26 +10,44 @@ import { DonationFormStepOneContainer } from './DonationFormStepOneContainer';
 import { DonationFormsStepTwoContainer } from './DonationFormsStepTwoContainer';
 import { DonationFormStepThreeContainer } from './DonationFormStepThreeContainer';
 import {ThankYou } from '../components/ThanksForDonate';
+import {DonationHistoryContainer} from './DonationHistoryContainer';
+import {DonationFormStepFour} from '../components/DonationFormStepFour';
 
 export class MenuContainer extends React.Component {
 
     constructor(props){
         super(props);
-        this.handleDonation = this.handleDonation.bind(this);
-        this.handleMainPage = this.handleMainPage.bind(this);
         this.handleChangeStep = this.handleChangeStep.bind(this);
+        this.handleSelectedOption = this.handleSelectedOption.bind(this);
         this.state = {actual_step: 1};
     }
 
-    handleLogout(){
-        Session.setLogout();
+    handleSelectedOption(event){
         Utils.lockScreen();
-        ReactDOM.render(<LoginContainer></LoginContainer>, document.getElementById('root'));
-    }
-
-    handleDonation(){
-        console.log("STEP: ",this.state.actual_step);
-        this.handleChangeStep(this.state.actual_step);
+        let page = "main_page";
+        if(event !== undefined){
+            page = event.target.name;
+        }
+        switch(page){
+            case 'logout':
+                Session.setLogout();
+                ReactDOM.render(<LoginContainer></LoginContainer>, document.getElementById('root'));
+                break;
+            case 'donation':
+                this.handleChangeStep(this.state.actual_step);
+                break;
+            case 'history':
+                this.props.pageChange(<DonationHistoryContainer></DonationHistoryContainer>);
+                break;
+            case 'main_page':
+                this.props.pageChange(Utils.main_template);
+                Utils.unlockScreen();
+                break;
+            default:
+                this.props.pageChange(Utils.main_template);
+                Utils.unlockScreen();
+                break;
+        }
     }
 
     handleChangeStep(target_step){
@@ -62,22 +80,16 @@ export class MenuContainer extends React.Component {
                 break;
             case 4: 
                 //clean states to restart app
-                this.props.pageChange(<ThankYou saveState={this.props.storeState}  handleClick={this.handleMainPage}></ThankYou>);
+                //this.props.pageChange(<ThankYou saveState={this.props.storeState}  handleClick={this.handleSelectedOption}></ThankYou>);
+                this.props.pageChange(<DonationFormStepFour saveState={this.props.storeState}  handleClick={this.handleSelectedOption}></DonationFormStepFour>);
                 break;
             default:
-                this.handleMainPage();
+                this.handleSelectedOption();
         }
     }
 
-    handleMainPage(){
-        this.props.pageChange(Utils.main_template);
-        Utils.unlockScreen();
-    }
-
     render(){
-        return (<Menu logout={this.handleLogout} 
-            donate={this.handleDonation} 
-            home={this.handleMainPage} ></Menu>);
+        return (<Menu handleSelect={this.handleSelectedOption}  ></Menu>);
     }
 
 } 

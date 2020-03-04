@@ -58,7 +58,6 @@ export class DonationFormsStepTwoContainer extends React.Component {
     }
 
     componentWillUnmount(){
-        console.log("Saving form two state", this.state.form_data);
         this.props.saveState('step_two',this.state.form_data);
     }
 

@@ -292,11 +292,9 @@ var authDonor = function(credentials, okCallback, badCallback,callback_params){
         if(!RequestHandler.validatesResponse(data)){
             return;
         }
-        console.log("REQUEST RESPONSE: " ,data);
         //200 status response
         okCallback(data.data.Data);
     }).catch(function (err) {
-        console.log("REQUEST RESPONSE: " ,err);
         if(!RequestHandler.validatesResponse(err)){
         return;
         }
@@ -306,6 +304,38 @@ var authDonor = function(credentials, okCallback, badCallback,callback_params){
   }
 
 
+    var getHistory = function (input_params,okCallback,badCallback) {
+        var request_id = RequestHandler.controlRequest(getIntroductoryPanel,input_params,okCallback,badCallback);
+        var request_array = [];
+        request_array.push(input_params);
+        let request_data = {}; 
+        let request_config = {
+            params: {
+                donorToken: window.sessionStorage.getItem('Donor_token'),
+                request_id: request_id,
+                apiKey: _apiKey
+            },
+            headers: {
+                Authorization:  "Bearer "+window.localStorage.getItem('App_token')
+            }
+        };
+        return axio.get(_apiUrl + "Donor/GivingHistory",request_config,request_data) 
+        .then(function (data) {
+            if(!RequestHandler.validatesResponse(data)){
+                return;
+            }
+            //200 status response
+            okCallback(data.data.Data);
+        }).catch(function (err) {
+            if(!RequestHandler.validatesResponse(err)){
+                return;
+            }
+            badCallback();
+        });
+
+    }
+
+
 const DonationAPI = {
     authApplication : authApplication,
     authDonor: authDonor,
@@ -313,7 +343,8 @@ const DonationAPI = {
     getCountries: getCountries,
     getUsStates: getUsStates,
     getIntroductoryPanel: getIntroductoryPanel,
-    saveDonation: saveDonation
+    saveDonation: saveDonation,
+    getHistory: getHistory
 }
 
 export default DonationAPI; 

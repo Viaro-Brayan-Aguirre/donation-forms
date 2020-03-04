@@ -108,7 +108,6 @@ var clean_stack = function(completed){
 
   //validates response of request
   function validatesResponse(data){
-      console.log(data);
       if(data.status == null || data.status === undefined || data.status === 500 || data.status === 404){
         return true; //no retries 
       }

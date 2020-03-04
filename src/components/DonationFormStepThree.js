@@ -43,7 +43,6 @@ export class DonationFormStepThree extends React.Component {
 
 
     renderFormOneDetail(data){
-        console.log("Form 1 data",data);
         let label_classes = "field_name col-xs-12 col-md-5 d-flex align-items-center";
         let input_classes = "field_content col-xs-12 col-md-7";
         return (
@@ -126,7 +125,6 @@ export class DonationFormStepThree extends React.Component {
     }
 
     renderFormTwoDetail(data){
-        console.log("Form 2 data",data);
         return (
             <div className="field_name col-12">
                 <label>{"$"+ data.form_one.amount_value + " " +data.form_two.agency_data.Name}</label>

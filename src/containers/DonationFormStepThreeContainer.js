@@ -23,7 +23,7 @@ export class DonationFormStepThreeContainer extends React.Component {
         return <DonationFormStepThree 
             form_data={this.state}
             changeStep={this.props.changeStep}
-            getTotalAmount={this.getTotalAmount}
+            getTotalAmount={Utils.getTotalAmount}
             confirmDonation = {this.confirmDonation}
         />
 
@@ -46,7 +46,7 @@ export class DonationFormStepThreeContainer extends React.Component {
     confirmDonation(){
         Utils.lockScreen();
         let form_one = this.state.form_one;
-        form_one.total_amount = this.getTotalAmount(form_one.frequency,form_one.amount_value);
+        form_one.total_amount = Utils.getTotalAmount(form_one.frequency,form_one.amount_value);
         let form_two = this.state.form_two.agency_data;
 
         let request_object = {
@@ -98,10 +98,7 @@ export class DonationFormStepThreeContainer extends React.Component {
             "CustomField5" : form_one.contactEmail,
             "CustomField6" : form_one.csv
         };
-        console.log("Object: ", request_object);
-        /*let ok = function(){
-            console.log("O");
-        }
+        console.log("Request Object: ", request_object);
         //DonationAPI.saveDonation(request_object,ok,ok);*/
         this.props.changeStep(4);
     }

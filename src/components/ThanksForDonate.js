@@ -14,7 +14,7 @@ export class ThankYou extends React.Component {
         return (
             <div className="thanks_you_page">
                 <div className="hero"> 
-                    <div className="hero__title">Thank you, we appreciate your support.<button onClick={this.props.handleClick} 
+                    <div className="hero__title">Thank you, we appreciate your support.<button name="main_page" onClick={this.props.handleClick} 
                     className="btn btn-dark">Continue</button></div>
                     <div className="cube"></div>
                     <div className="cube"></div>
